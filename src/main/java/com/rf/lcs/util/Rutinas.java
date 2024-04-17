@@ -1,6 +1,7 @@
 package com.rf.lcs.util;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.Collection;
 import java.util.Objects;
 import java.util.Optional;
@@ -210,12 +211,14 @@ public class Rutinas {
 			if(date.isPresent()) {
 				return true;
 			}
-		} catch (Exception e) {
+		} catch (DateTimeParseException e) {
 			// TODO: handle exception
 		}
 		return false;
 	}
 	
-	
+	public static boolean isPasswordValid(String password) {
+		return isEmpty(password) && password.matches(PASSWORD_PATTERN);
+	}
 	
 }
