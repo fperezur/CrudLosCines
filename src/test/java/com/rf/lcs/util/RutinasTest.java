@@ -14,20 +14,22 @@ class RutinasTest {
 	final String STRING_CON_DATOS = "Hola";
 	final String STRING_CON_DATOS1 = "H";
 	
+	final String NUMERO_DNI_OK = "25.062.225-E";
+	final String NUMERO_DNI_ERROR_LETRA = "12.345.678-Ñ";
+	final String NUMERO_DNI_ERROR_FORM_CORTO = "12.2.678-A";
+	final String NUMERO_DNI_ERROR_FORM_CORTO2 = "122.678-A";
+	final String NUMERO_DNI_ERROR_FORM_LARGO = "123.456.678-A";
+	final String NUMERO_DNI_ERROR_FORM_ERR = "12345678A";
+	final String NUMERO_DNI_ERROR_FORM_ERR2 = "12.345.678.A";
+	
 	final String CORREO_ELECTRONICO_CORRECTO = "migarcia@recursosformacion.com";
 	final String CORREO_ELECTRONICO_CORRECTO2 = "mighel.garcia@rf.com";
 	final String CORREO_ELECTRONICO_CORRECTO3 = "m@r.com";
-	final String CORREO_ELECTRONICO_ERRONEO_1 = "migarcia.recursosformacion.com";
-	final String CORREO_ELECTRONICO_ERRONEO_2 = "migarcia@recursosformacion";
-	final String CORREO_ELECTRONICO_ERRONEO_3 = "@recursosformacion.com";
-	final String CORREO_ELECTRONICO_ERRONEO_4 = "migarcia@";
-	final String CORREO_ELECTRONICO_ERRONEO_5 = "m@r";
-	
-	final String DNI_VACIO ="";
-	final int DNI_LONGITUD = 12;
-	final String DNI_VALIDO1 = "25.062.225-E";
-	final String DNI_NOVALIDO1 = "25.062.225";
-	final String DNI_NOVALIDO2 = "25062225E";
+	final String CORREO_ELECTRONICO_SIN_A = "migarcia.recursosformacion.com";
+	final String CORREO_ELECTRONICO_SIN_TLD = "migarcia@recursosformacion";
+	final String CORREO_ELECTRONICO_SIN_NOMBRE = "@recursosformacion.com";
+	final String CORREO_ELECTRONICO_SIN_DOMINIO = "migarcia@";
+	final String CORREO_ELECTRONICO_CON_NUMERO = "123@123.12";
 	
 	@ParameterizedTest
 	@NullAndEmptySource
@@ -61,11 +63,11 @@ class RutinasTest {
 				()-> assertTrue(Rutinas.isEmailValid(CORREO_ELECTRONICO_CORRECTO)),
 				()-> assertTrue(Rutinas.isEmailValid(CORREO_ELECTRONICO_CORRECTO2)),
 				()-> assertTrue(Rutinas.isEmailValid(CORREO_ELECTRONICO_CORRECTO3)),
-				()-> assertFalse(Rutinas.isEmailValid(CORREO_ELECTRONICO_ERRONEO_1)),
-				()-> assertFalse(Rutinas.isEmailValid(CORREO_ELECTRONICO_ERRONEO_2)),
-				()-> assertFalse(Rutinas.isEmailValid(CORREO_ELECTRONICO_ERRONEO_3)),
-				()-> assertFalse(Rutinas.isEmailValid(CORREO_ELECTRONICO_ERRONEO_4)),
-				()-> assertFalse(Rutinas.isEmailValid(CORREO_ELECTRONICO_ERRONEO_5))
+				()-> assertFalse(Rutinas.isEmailValid(CORREO_ELECTRONICO_SIN_A)),
+				()-> assertFalse(Rutinas.isEmailValid(CORREO_ELECTRONICO_SIN_TLD)),
+				()-> assertFalse(Rutinas.isEmailValid(CORREO_ELECTRONICO_SIN_NOMBRE)),
+				()-> assertFalse(Rutinas.isEmailValid(CORREO_ELECTRONICO_SIN_DOMINIO)),
+				()-> assertFalse(Rutinas.isEmailValid(CORREO_ELECTRONICO_CON_NUMERO))
 				);
 	}
 	
@@ -76,11 +78,12 @@ class RutinasTest {
 		assertTrue(Rutinas.isEmailValid(string));
 	}
 	@ParameterizedTest
-	@ValueSource(strings = {CORREO_ELECTRONICO_ERRONEO_1, 
-			CORREO_ELECTRONICO_ERRONEO_2, CORREO_ELECTRONICO_ERRONEO_3,
-			CORREO_ELECTRONICO_ERRONEO_4, CORREO_ELECTRONICO_ERRONEO_5})
+	@ValueSource(strings = {CORREO_ELECTRONICO_SIN_A, 
+			CORREO_ELECTRONICO_SIN_TLD, CORREO_ELECTRONICO_SIN_NOMBRE,
+			CORREO_ELECTRONICO_SIN_DOMINIO, CORREO_ELECTRONICO_CON_NUMERO})
 	void testEmailIsFalse(String string) {
 		assertFalse(Rutinas.isEmailValid(string));
+		
 	}
 
 	@Test
@@ -93,13 +96,24 @@ class RutinasTest {
 		fail("Not yet implemented");
 	}
 
-	@Test
-	void testValidDNI() {
-		
-		  assertAll( 
-				  ()-> assertFalse(Rutinas.validDNI(DNI_VACIO)), 
-				  ()-> assertTrue(Rutinas.validDNI(DNI_VALIDO1)) );
+	@ParameterizedTest
+	@ValueSource(strings = {NUMERO_DNI_OK})
+	void testValidDNI(String string) {
+		assertTrue(Rutinas.validDNI(string));
+		  
 	}
+	@ParameterizedTest
+	@ValueSource(strings = {NUMERO_DNI_ERROR_LETRA,
+			NUMERO_DNI_ERROR_FORM_CORTO,
+			NUMERO_DNI_ERROR_FORM_CORTO2,
+			NUMERO_DNI_ERROR_FORM_LARGO,
+			NUMERO_DNI_ERROR_FORM_ERR,
+			NUMERO_DNI_ERROR_FORM_ERR2})
+	void testDNIIsFalse(String string) {
+		assertFalse(Rutinas.validDNI(string));
+		
+	}
+	
 
 	@Test
 	void testCompareDates() {
