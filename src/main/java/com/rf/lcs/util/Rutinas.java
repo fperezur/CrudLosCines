@@ -95,23 +95,37 @@ public class Rutinas {
 	 * 
 	 **************************************************************************************/
 	public static boolean validDNI(String dni) {
-		if(isEmpty(dni)){
+		if(dni == null){
 			return false;
 		}
+		//Si es un NIE se hacen las operaciones necesarias para poder calcular
+		//luego la letra correcta
+		if(dni.startsWith("X")) {
+			dni = dni.replaceFirst("X", "0");
+		}else if(dni.startsWith("Y")) {
+			dni = dni.replaceFirst("Y", "1");
+		}else if(dni.startsWith("Z")) {
+			dni = dni.replaceFirst("Z", "2");
+		}
+		
 		if(dni.length() != DNI_LONGITUD) {
 			return false;
 		}
 		if(!dni.matches(DNI_PATTERN)) {
 			return false;
 		}
+		
 		String dniNumber = dni.substring(0, dni.length() - 2).replace(".", "");
 		int dniValueNumber = Integer.parseInt(dniNumber);
-		Character letterDNI = Character.toUpperCase(dni.charAt(dni.length()));
+		
+		Character letterDNI = Character.toUpperCase(dni.charAt(dni.length() - 1));
 		
 		if(DNI_LETTER.charAt(dniValueNumber % 23) == letterDNI) {
+			return true;
+		}else {
 			return false;
 		}
-		return true;
+		
 	}
 	
 	/*****************************************************************************************
