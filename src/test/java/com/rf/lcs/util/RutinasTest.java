@@ -11,10 +11,13 @@ class RutinasTest {
 	final String STRING_CON_DATOS = "Hola";
 	
 	final String CORREO_ELECTRONICO_CORRECTO = "migarcia@recursosformacion.com";
+	final String CORREO_ELECTRONICO_CORRECTO2 = "mighel.garcia@rf.com";
+	final String CORREO_ELECTRONICO_CORRECTO3 = "m@r.com";
 	final String CORREO_ELECTRONICO_ERRONEO_1 = "migarcia.recursosformacion.com";
 	final String CORREO_ELECTRONICO_ERRONEO_2 = "migarcia@recursosformacion";
 	final String CORREO_ELECTRONICO_ERRONEO_3 = "@recursosformacion.com";
 	final String CORREO_ELECTRONICO_ERRONEO_4 = "migarcia@";
+	final String CORREO_ELECTRONICO_ERRONEO_5 = "m@r";
 	
 	@Test
 	void testIsEmpty() {
@@ -29,10 +32,13 @@ class RutinasTest {
 	void testIsEmailValid() {
 		assertAll(
 				()-> assertTrue(Rutinas.isEmailValid(CORREO_ELECTRONICO_CORRECTO)),
+				()-> assertTrue(Rutinas.isEmailValid(CORREO_ELECTRONICO_CORRECTO2)),
+				()-> assertTrue(Rutinas.isEmailValid(CORREO_ELECTRONICO_CORRECTO3)),
 				()-> assertFalse(Rutinas.isEmailValid(CORREO_ELECTRONICO_ERRONEO_1)),
 				()-> assertFalse(Rutinas.isEmailValid(CORREO_ELECTRONICO_ERRONEO_2)),
 				()-> assertFalse(Rutinas.isEmailValid(CORREO_ELECTRONICO_ERRONEO_3)),
-				()-> assertFalse(Rutinas.isEmailValid(CORREO_ELECTRONICO_ERRONEO_4))
+				()-> assertFalse(Rutinas.isEmailValid(CORREO_ELECTRONICO_ERRONEO_4)),
+				()-> assertFalse(Rutinas.isEmailValid(CORREO_ELECTRONICO_ERRONEO_5))
 				);
 	}
 
