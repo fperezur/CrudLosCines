@@ -28,8 +28,7 @@ public class Rutinas {
 	/**
 	 * Patrón para password que admite letras, números y un caracter especila min=6 max=20 caracteres
 	 */
-	private final static String PASSWORD_PATTERN ="((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,20})";
-	
+	private static final String PASSWORD_PATTERN = "((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,20})";
 	/**
 	 * *******************************************************************************
 	 * Devuelve true si la string pasada es nula o vacia
@@ -68,8 +67,50 @@ public class Rutinas {
 	 * @date: Octubre 2023
 	 * @author: Miguel Garcia
 	 */
-	public static<T> T newIsNotEmpty(T actualValue, T newValue) {
-		return Objects.nonNull(newValue)? newValue : actualValue;
+	public static String newIsNotEmptyStringString(String actualValue, String newValue) {
+		if(Objects.nonNull(newValue) && !"".equalsIgnoreCase(newValue)) {
+			return newValue;
+		} else {
+			return actualValue;
+		}
+	}
+
+	
+	  public static <T> T newIsNotEmptyT(T actualValue, T newValue) {
+	  if(Objects.nonNull(newValue)) { 
+		  	return newValue; 
+		  } else { 
+			  return actualValue;
+		  }
+	  }
+	 
+	public static int newIsNotEmptyIntInt(int actualValue, int newValue) {
+		if(Objects.nonNull(newValue)) {
+			return newValue;
+		} else {
+			return actualValue;
+		}
+	}
+	public static LocalDate newIsNotEmptyLocaldateLocaldate(LocalDate actualValue, LocalDate newValue) {
+		if(Objects.nonNull(newValue)) {
+			return newValue;
+		} else {
+			return actualValue;
+		}
+	}
+	public static Long newIsNotEmptyLongLong(Long actualValue, Long newValue) {
+		if(Objects.nonNull(newValue)) {
+			return newValue;
+		} else {
+			return actualValue;
+		}
+	}
+	public static Object newIsNotEmptyObjectObject(Object actualValue, Object newValue) {
+		if(Objects.nonNull(newValue)) {
+			return newValue;
+		} else {
+			return actualValue;
+		}
 	}
 	
 	/**
@@ -136,15 +177,15 @@ public class Rutinas {
 	 * *******************************************************************************
 	 * Compara dos fechas
 	 * 
-	 * @param date1 Fecha a comprobar uno
-	 * @param date2   Fecha comparacion
+	 * @param date Fecha a comprobar uno
+	 * @param min   Fecha comparacion
 	 * @return -1, 0 +1
 	 * @date: Octubre 2023
 	 * @author: Miguel Garcia
 	 */
-	public static int compareDates(LocalDate date1, LocalDate date2) {
-		if(date1 != null && date2 != null) {
-			return date1.compareTo(date2);
+	public static int compareDates(LocalDate date, LocalDate min) {
+		if(date != null && min != null) {
+			return date.compareTo(min);
 		}
 		return 999;
 	}
@@ -232,7 +273,7 @@ public class Rutinas {
 	}
 	
 	public static boolean isPasswordValid(String password) {
-		return isEmpty(password) && password.matches(PASSWORD_PATTERN);
+		return !isEmpty(password) && password.matches(PASSWORD_PATTERN);
 	}
 	
 }
