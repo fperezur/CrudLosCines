@@ -121,7 +121,7 @@ public class Rutinas {
 	 * @return
 	 */
 	public static boolean isEmptyOrNull(Collection<?> col) {
-		return col == null || col.isEmpty();
+		return (col == null || col.isEmpty());
 	}
 	
 	/**
@@ -201,7 +201,10 @@ public class Rutinas {
 	 * @author: Miguel Garcia
 	 */
 	public static boolean dateIsGreater(LocalDate date, LocalDate min) {
-		return Rutinas.compareDates(date, min) == 1;
+		if(Rutinas.compareDates(date, min) > 0) {
+			return true;
+		}
+		return false;
 	}
 	
 	/**
@@ -215,7 +218,10 @@ public class Rutinas {
 	 * @author: Miguel Garcia
 	 */
 	public static boolean dateIsGreaterOrEqual(LocalDate date, LocalDate min) {
-		return Rutinas.compareDates(date, min) == 1 || Rutinas.compareDates(date, min) == 0;
+		if(Rutinas.compareDates(date, min) >= 0 || Rutinas.compareDates(date, min) == 0) {
+			return true;
+		}
+		return false;
 	}
 	
 	/**
@@ -229,7 +235,10 @@ public class Rutinas {
 	 * @author: Miguel Garcia
 	 */
 	public static boolean dateIsLess(LocalDate date, LocalDate min) {
-		return Rutinas.compareDates(date, min) == -1;
+		if(Rutinas.compareDates(date, min) < 0) {
+			return true;
+		}
+		return false;
 	}
 	
 	/**
@@ -243,7 +252,10 @@ public class Rutinas {
 	 * @author: Miguel Garcia
 	 */
 	public static boolean dateIsLessOrEqual(LocalDate date, LocalDate min) {
-		return Rutinas.compareDates(date, min) == -1 || Rutinas.compareDates(date, min) == 0;
+		if(Rutinas.compareDates(date, min) <= 0 || Rutinas.compareDates(date, min) == 0) {
+			return true;
+		}
+		return false;
 	}
 	
 	/**
