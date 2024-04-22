@@ -4,9 +4,11 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -145,7 +147,17 @@ class RutinasTest {
 	}
 	@Test
 	void testIsEmptyOrNull() {
-		fail("Not yet implemented");
+		Collection<String> col = null;
+		List<String> listaS = null;
+		List<String> listasCreada = new ArrayList<String>();
+		List<Integer> listaNum = Arrays.asList(1,2,3);
+		
+		assertAll(
+				() -> assertTrue(Rutinas.isEmptyOrNull(col)),
+				() -> assertTrue(Rutinas.isEmptyOrNull(listaS)),
+				() -> assertTrue(Rutinas.isEmptyOrNull(listasCreada)),
+				() -> assertFalse(Rutinas.isEmptyOrNull(listaNum))
+				);
 	}
 
 	@ParameterizedTest
@@ -171,7 +183,8 @@ class RutinasTest {
 		return Stream.of(
 					Arguments.of(List.of(AHORA, AHORA, 0)),
 					Arguments.of(List.of(AHORA, MANIANA, -1)),
-					Arguments.of(List.of(MANIANA, AHORA, 1)));
+					Arguments.of(List.of(MANIANA, AHORA, 1)),
+					Arguments.of(List.of(MANIANA, AYER, 3)));
 	}
 	
 	@ParameterizedTest
@@ -184,27 +197,49 @@ class RutinasTest {
 
 	@Test
 	void testDateIsGreater() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	void testDateIsGreaterOrEqual() {
-		fail("Not yet implemented");
+		assertAll(
+				() -> assertTrue(Rutinas.dateIsGreaterOrEqual(AHORA, AHORA)),
+				() -> assertTrue(Rutinas.dateIsGreater(MANIANA, AHORA)),
+				() -> assertTrue(Rutinas.dateIsGreater(AHORA, AYER)),
+				() -> assertTrue(Rutinas.dateIsGreater(MANIANA, AYER)),
+				() -> assertFalse(Rutinas.dateIsGreater(AHORA, MANIANA)),
+				() -> assertFalse(Rutinas.dateIsGreater(AYER, AHORA)),
+				() -> assertFalse(Rutinas.dateIsGreater(AYER, MANIANA)));
 	}
 
 	@Test
 	void testDateIsLess() {
-		fail("Not yet implemented");
+		assertAll(
+				() -> assertTrue(Rutinas.dateIsLessOrEqual(AHORA, AHORA)),
+				() -> assertTrue(Rutinas.dateIsLess(AYER, MANIANA)),
+				() -> assertTrue(Rutinas.dateIsLess(AHORA, MANIANA)),
+				() -> assertTrue(Rutinas.dateIsLess(AYER, AHORA)),
+				() -> assertFalse(Rutinas.dateIsLess(MANIANA, AHORA)),
+				() -> assertFalse(Rutinas.dateIsLess(AHORA, AYER)),
+				() -> assertFalse(Rutinas.dateIsLess(MANIANA, AYER))
+				);
 	}
 
-	@Test
-	void testDateIsLessOrEqual() {
-		fail("Not yet implemented");
+	@ParameterizedTest
+	@ValueSource(strings = {
+			FECHA_OK,
+			FECHA_OK_1,
+			FECHA_OK_2,
+			FECHA_OK_3,
+	})
+	void testDateIsValid(String entrada) {
+		assertTrue(Rutinas.dateIsValid(entrada));
 	}
-
-	@Test
-	void testDateIsValid() {
-		fail("Not yet implemented");
+	
+	@ParameterizedTest
+	@ValueSource(strings = {
+			FECHA_ERROR,
+			FECHA_ERROR_1,
+			FECHA_ERROR_2,
+			FECHA_ERROR_3,
+	})
+	void testDateNoValid(String entrada) {
+		assertFalse(Rutinas.dateIsValid(entrada));
 	}
 
 	@ParameterizedTest
