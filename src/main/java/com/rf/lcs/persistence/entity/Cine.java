@@ -15,7 +15,9 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.DecimalMax;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "cine")
@@ -25,15 +27,22 @@ public class Cine implements Modelo{
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long id_cine;
 	
-	@Column(nullable = false, length = 50)
+	@Column
+	@NotNull
+	@Size(min = 0, max = 50)
 	@NotEmpty
 	private String ci_nombre;
 	
-	@Column(nullable = false, length = 100)
+	@Column
+	@NotNull
 	@NotEmpty
+	@Size(min = 0, max = 100)
 	private String ci_calle;
 	
-	@Column(nullable = true, length = 100)
+	@Column
+	@NotNull
+	@NotEmpty
+	@Size(min = 0, max = 100)
 	private String ci_barrio;
 	
 	@Column(nullable = false)
