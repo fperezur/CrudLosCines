@@ -26,6 +26,7 @@ import com.rf.lcs.exceptions.DomainException;
 import com.rf.lcs.persistence.entity.Cine;
 import com.rf.lcs.servicio.CineService;
 
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 
@@ -40,6 +41,7 @@ public class CineController {
 
 	
 	@GetMapping("/{id}")
+	@Operation(description = "Recurso que consulta un cine por ID")
 	public ResponseEntity<Map<String, Object>> readOne(@PathVariable Long id){
 		Map<String, Object> map = new LinkedHashMap<>();
 		Optional<Cine> cine = cineDao.findById(id);
@@ -54,6 +56,7 @@ public class CineController {
 	}
 	
 	@GetMapping({"", "/"})
+	@Operation(description = "Recurso que lista todos los cines en la BBDD")
 	public ResponseEntity<Map<String, Object>> readAll() throws ControllerException{
 		Map<String, Object> map = new LinkedHashMap<>();
 		List<Cine> listaCines = cineDao.listAll();
@@ -67,6 +70,7 @@ public class CineController {
 	}
 	
 	@PostMapping
+	@Operation(description = "Recurso que inserta un nuevo cine en la BBDD")
 	public ResponseEntity<Map<String, Object>> insertNew(@Valid @RequestBody Cine cineNew) 
 			throws DomainException, ControllerException, DaoException {
 		Map<String, Object> map = new LinkedHashMap<>();
@@ -86,6 +90,7 @@ public class CineController {
 	}
 	
 	@PutMapping
+	@Operation(description = "Recurso que modifica un cine existente en la BBDD")
 	public ResponseEntity<Map<String, Object>> modificacion(@RequestBody Cine cineInput) throws ControllerException, DomainException, DaoException {
 		Map<String, Object> map = new LinkedHashMap<String, Object>();
 		if (cineDao.update(cineInput)) {
@@ -99,6 +104,7 @@ public class CineController {
 	}
 	
 	@DeleteMapping("/{id}")
+	@Operation(description = "Recurso que borra un cine en la BBDD")
 	public ResponseEntity<Map<String, Object>> deleteCine(@NotNull @PathVariable("id") Long id) 
 			throws DomainException, ControllerException, DaoException {
 		Map<String, Object> map = new LinkedHashMap<>();
@@ -116,6 +122,7 @@ public class CineController {
 	}
 	
 	@RequestMapping("/test")
+	@Operation(description = "Recurso para comprobar el servicio")
 	public @ResponseBody String text() {
 		return "Test";
 	}
